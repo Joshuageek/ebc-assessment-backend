@@ -55,7 +55,7 @@ def append_row_with_headers(worksheet, data):
     worksheet.append_row(row)
 
 
-@app.route("/submit", methods=["POST", "OPTIONS"])
+@app.route("/api/submit", methods=["POST", "OPTIONS"])
 def submit():
     if request.method == "OPTIONS":
         return "", 204, get_cors_headers()
@@ -84,7 +84,7 @@ def submit():
         )
 
 
-@app.route("/health", methods=["GET"])
+@app.route("/api/health", methods=["GET"])
 def health():
     return jsonify({"status": "healthy"}), 200
 
