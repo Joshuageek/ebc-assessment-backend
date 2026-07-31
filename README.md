@@ -1,66 +1,85 @@
-# EBC Assessment Backend — Clean Vercel Deploy
+# EBC Assessment Backend — Final Fix
 
-## What Went Wrong
+## What Was Broken
 
-Your `vercel.json` contained a `builds` array that forced Vercel to use an
-outdated build system. The logs showed:
+Two issues caused the "none define a top-level 'app' Flask instance" error:
 
-```
-WARNING! Due to `builds` existing in your configuration file...
-WARNING! Build output contains no "functions" or "static" directory...
-Build Completed in /vercel/output [5ms]
-```
+1. **Syntax error in api/index.py** — Missing closing quote on `__main__`:
+   ```python
+   if __name__ == "__main__:     # ← missing " before the colon
+   ```
+   This syntax error prevented Python from parsing the file, so Vercel
+could not find the `app = Flask(__name__)` variable.
 
-5ms build = nothing was built. That's why every route returns 404.
+2. **Possible leftover index.py at repo root** — If you have `index.py`
+   at the root AND `api/index.py`, Vercel gets confused.
 
-## The Fix
+## The Fix (3 steps)
 
-### Step 1: Delete vercel.json
+### Step 1: Clean your repo
 
-Remove `vercel.json` from your repository completely.
-Vercel auto-detects Python files in the `api/` folder. You don't need any config file.
-
-Your repo must look EXACTLY like this:
+Make sure your repo has EXACTLY these files and NOTHING else:
 
 ```
 ebc-assessment-backend/
 ├── api/
-│   └── index.py          ← Flask app
-├── requirements.txt      ← Python dependencies
-└── .gitignore            ← optional, but recommended
+│   └── index.py          ← the ONLY Python file
+├── requirements.txt
+└── .gitignore            ← optional
 ```
 
-NO vercel.json. NO other config files.
+**Delete these if they exist:**
+- `index.py` at the ROOT (not inside `api/`)
+- `vercel.json` (any version)
+- `app.py`
+- `main.py`
+- Any other `.py` files
 
-### Step 2: Make sure your file paths are correct
-
-- `api/index.py` must exist (not `api.py` at root, not `app.py`)
-- `requirements.txt` must be at the root level
-
-### Step 3: Commit and push
-
+Run this in your repo:
 ```bash
-git rm vercel.json
+# Delete any root-level Python files
+git rm -f index.py app.py main.py vercel.json 2>/dev/null
+
+# Verify only api/index.py and requirements.txt exist
+ls
+ls api/
+
+# Should show:
+# README.md  requirements.txt  api/
+# api/index.py
+
 git add .
-git commit -m "Remove vercel.json — use auto-detected Python"
+git commit -m "Fix: corrected syntax error, removed extra files"
 git push origin main
 ```
 
-Vercel will auto-deploy. The build should take 30–60 seconds (not 5ms).
+### Step 2: Verify the corrected code
 
-### Step 4: Check the build logs
+Open `api/index.py` and confirm line 85 reads:
+```python
+if __name__ == "__main__":
+```
+NOT:
+```python
+if __name__ == "__main__:
+```
 
-Look for these lines in the Vercel build output:
+### Step 3: Check the Vercel build
+
+After pushing, Vercel should auto-deploy. Look for:
 
 ```
-Installing required dependencies...
 Build Completed in /vercel/output [xxxxxms]
 ```
 
-If the build time is more than a few seconds and you see dependency installation,
-your Python function is being built correctly.
+Where `xxxxxms` is more than a few seconds (30–60s is normal for Python).
 
-### Step 5: Test
+You should NOT see:
+```
+Error: Found index.py, api/index.py but none define a top-level "app"
+```
+
+### Step 4: Test
 
 ```
 https://ebc-assessment-backend.vercel.app/api/health
@@ -68,29 +87,18 @@ https://ebc-assessment-backend.vercel.app/api/health
 
 Should return: `{"status":"healthy"}`
 
-```
-https://ebc-assessment-backend.vercel.app/api/submit
-```
+## If You Still Get the Error
 
-Should return a JSON error (because you didn't POST form data), not a 404.
-
-## URL Mapping
-
-| Browser URL | Vercel handles | Flask sees | Route |
-|---|---|---|---|
-| `/api/health` | strips `/api` → `api/index.py` | `/health` | `@app.route("/health")` |
-| `/api/submit` | strips `/api` → `api/index.py` | `/submit` | `@app.route("/submit")` |
+1. Go to your GitHub repo → click the file list
+2. Confirm there is NO `index.py` at root level
+3. Confirm `api/index.py` exists
+4. Click into `api/index.py` and scroll to the bottom
+5. Confirm the last line is `if __name__ == "__main__":` (with both quotes)
+6. If anything looks wrong, upload the file from this package directly
 
 ## HTML Forms
 
-In all 5 assessment HTML files, use:
-
+Keep using:
 ```javascript
 const API_URL = 'https://ebc-assessment-backend.vercel.app/api/submit';
 ```
-
-## Environment Variables (already set — don't change)
-
-Make sure these are still in Vercel Project Settings > Environment Variables:
-- `SPREADSHEET_ID`
-- `GOOGLE_CREDENTIALS`
