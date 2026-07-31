@@ -89,5 +89,38 @@ def health():
     return jsonify({"status": "healthy"}), 200
 
 
+@app.route("/api/debug", methods=["GET"])
+def debug():
+    """
+    Diagnostic endpoint. Shows every route Flask actually registered
+    and whether required env vars are present (values are never
+    exposed — only True/False, plus a safe length check).
+    """
+    routes = []
+    for rule in app.url_map.iter_rules():
+        routes.append({
+            "rule": str(rule),
+            "methods": sorted(m for m in rule.methods if m not in ("HEAD", "OPTIONS")),
+        })
+
+    creds_valid_json = False
+    if GOOGLE_CREDENTIALS:
+        try:
+            json.loads(GOOGLE_CREDENTIALS)
+            creds_valid_json = True
+        except json.JSONDecodeError:
+            creds_valid_json = False
+
+    return jsonify({
+        "status": "debug ok",
+        "registered_routes": routes,
+        "env": {
+            "SPREADSHEET_ID_set": bool(SPREADSHEET_ID),
+            "GOOGLE_CREDENTIALS_set": bool(GOOGLE_CREDENTIALS),
+            "GOOGLE_CREDENTIALS_is_valid_json": creds_valid_json,
+        },
+    }), 200
+
+
 if __name__ == "__main__":
     app.run(debug=True)
