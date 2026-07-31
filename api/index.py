@@ -55,12 +55,6 @@ def append_row_with_headers(worksheet, data):
     worksheet.append_row(row)
 
 
-# ═══════════════════════════════════════════════════════════
-# ROUTES: NO /api/ prefix — Vercel auto-routes api/index.py to /api
-# So /submit handles requests to /api/submit
-# And /health handles requests to /api/health
-# ═══════════════════════════════════════════════════════════
-
 @app.route("/submit", methods=["POST", "OPTIONS"])
 def submit():
     if request.method == "OPTIONS":
@@ -95,6 +89,5 @@ def health():
     return jsonify({"status": "healthy"}), 200
 
 
-# Local development entry point
-if __name__ == "__main__":
+if __name__ == "__main__:
     app.run(debug=True)
