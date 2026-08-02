@@ -20,7 +20,7 @@ CAMPAIGNS = {
 
     "recruitment": {
         "sheet": "Recruitment Readiness",
-        "email": "nabaasapromise@welcometoebc.com"
+        "email": "nabaasa.promise@welcometoebc.com"
     },
 
     "revenue": {
@@ -40,7 +40,7 @@ CAMPAIGNS = {
 
     "executive": {
         "sheet": "Year-End Organizational",
-        "email": "kemirembemercy@welcometoebc.com"
+        "email": "mercy.kemirembe@welcometoebc.com"
     }
 
 }
