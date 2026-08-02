@@ -20,17 +20,17 @@ CAMPAIGNS = {
 
     "recruitment": {
         "sheet": "Recruitment Readiness",
-        "email": "nabaasa.promise@welcometoebc.com"
+        "email": "promise.nabaasa@welcometoebc.com"
     },
 
     "revenue": {
         "sheet": "Revenue Growth",
-        "email": "mikishe@welcometoebc.com"
+        "email": "makishe@welcometoebc.com"
     },
 
     "workplace": {
         "sheet": "Workplace Performance",
-        "email": "christianlenana@welcometoebc.com"
+        "email": "christian@welcometoebc.com"
     },
 
     "mens": {
