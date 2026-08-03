@@ -1,8 +1,6 @@
 import json
 import os
 import smtplib
-import urllib.request
-import urllib.error
 
 from collections import OrderedDict
 from datetime import datetime, timezone
@@ -18,20 +16,6 @@ app = Flask(__name__)
 
 SPREADSHEET_ID = os.environ.get("SPREADSHEET_ID")
 GOOGLE_CREDENTIALS = os.environ.get("GOOGLE_CREDENTIALS")
-
-# --- Groq API config -----------------------------------------------------
-# Add GROQ_API_KEY to your environment variables (Vercel project
-# settings, etc). Get a free key at https://console.groq.com/keys
-# If it's missing, or the API call fails for any reason, submissions
-# still succeed and the email falls back to a plain question/answer
-# listing instead of a narrative summary.
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-# openai/gpt-oss-120b is Groq's current recommended replacement for the
-# retired llama-3.3-70b-versatile model. Override with GROQ_MODEL if
-# you'd rather use something else (e.g. "llama-3.1-8b-instant" for max
-# speed, or check console.groq.com/docs/models for the current list).
-GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 
 CAMPAIGNS = {
@@ -327,103 +311,6 @@ def extract_qa_pairs(campaign, data):
     return pairs
 
 
-def call_groq(prompt, max_tokens=700):
-
-    if not GROQ_API_KEY:
-
-        raise RuntimeError("GROQ_API_KEY is not set")
-
-    payload = json.dumps({
-
-        "model": GROQ_MODEL,
-
-        "max_tokens": max_tokens,
-
-        "messages": [
-            {"role": "user", "content": prompt}
-        ]
-
-    }).encode("utf-8")
-
-    req = urllib.request.Request(
-
-        GROQ_API_URL,
-
-        data=payload,
-
-        headers={
-
-            "Content-Type": "application/json",
-
-            "Authorization": f"Bearer {GROQ_API_KEY}",
-
-        },
-
-        method="POST"
-
-    )
-
-    with urllib.request.urlopen(req, timeout=30) as response:
-
-        result = json.loads(response.read().decode("utf-8"))
-
-    choices = result.get("choices", [])
-
-    if not choices:
-
-        raise RuntimeError(f"Groq returned no choices: {result}")
-
-    return choices[0].get("message", {}).get("content", "").strip()
-
-
-def generate_narrative_summary(campaign_info, contact, qa_pairs):
-    """Ask Claude to turn the raw Q&A into a short narrative paragraph
-    describing how the respondent sees their organization, written for
-    a salesperson who wasn't the one filling out the form."""
-
-    if not qa_pairs:
-
-        return None
-
-    contact_lines = "\n".join(
-        f"{label}: {value}" for label, value in contact.items()
-    ) or "(no contact details provided)"
-
-    qa_lines = "\n".join(
-        f"Q: {question}\nA: {answer}" for question, answer in qa_pairs
-    )
-
-    prompt = f"""You are helping a sales team at EBC quickly understand a
-prospect who just completed the "{campaign_info['title']}" self-assessment
-on their website. Someone else on the team will read your summary before
-following up, so write it as if briefing a colleague — not as a report to
-the prospect.
-
-Contact details:
-{contact_lines}
-
-Their answers:
-{qa_lines}
-
-Write a short narrative summary (roughly 120-200 words) in the third
-person that:
-- Uses their name and organization naturally where it reads well
-- Describes, in plain language, how they seem to feel about this topic
-  based on their answers (their strengths, pain points, and any specific
-  numbers or comments they gave)
-- Notes anything relevant to their willingness to move forward (e.g. if
-  they asked for a site visit, strategy session, or expressed interest
-  in a new model/partnership)
-- Ends with a one-line "Suggested next step:" for the sales rep
-
-Only use what's actually in the answers above — don't invent details.
-Write plain prose paragraphs (no headers, no bullet list except the final
-"Suggested next step:" line). Do not include a preamble like "Here is a
-summary" — start directly with the narrative."""
-
-    return call_groq(prompt)
-
-
 def build_qa_appendix(qa_pairs):
 
     if not qa_pairs:
@@ -454,30 +341,9 @@ def build_email_body(campaign_info, contact, qa_pairs, data):
         f"{contact_block}\n"
     )
 
-    try:
-
-        narrative = generate_narrative_summary(campaign_info, contact, qa_pairs)
-
-    except Exception as e:
-
-        narrative = None
-
-        print(f"Groq summary generation failed: {e}")
-
-    if narrative:
-
-        summary_block = f"Summary\n{'-' * 40}\n{narrative}\n"
-
-    else:
-
-        summary_block = (
-            "Summary\n" + "-" * 40 +
-            "\n(AI summary unavailable — see full responses below.)\n"
-        )
-
     appendix = build_qa_appendix(qa_pairs)
 
-    return f"{header}\n{summary_block}\n{appendix}"
+    return f"{header}\n{appendix}"
 
 
 def send_notification_email(
@@ -644,8 +510,6 @@ def debug():
             "SMTP_EMAIL_set": bool(os.environ.get("SMTP_EMAIL")),
 
             "SMTP_PASSWORD_set": bool(os.environ.get("SMTP_PASSWORD")),
-
-            "GROQ_API_KEY_set": bool(GROQ_API_KEY),
 
         }
 
