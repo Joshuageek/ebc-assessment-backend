@@ -48,6 +48,12 @@ CAMPAIGNS = {
         "sheet": "Year-End Organizational",
         "email": "mercy.kemirembe@welcometoebc.com",
         "title": "Year-End Organizational Assessment"
+    },
+
+    "brave_men": {
+        "sheet": "Brave Men Support Check-In",
+        "email": "christian@welcometoebc.com",
+        "title": "Brave Men Support Check-In"
     }
 
 }
@@ -162,6 +168,53 @@ QUESTIONS = {
         ("q22_additional_info", "Anything else they'd like EBC to know about the organization or its objectives?"),
     ]),
 
+    "brave_men": OrderedDict([
+        ("privacy_understood", "Has the respondent read and understood the privacy statement?"),
+        ("purpose_understood", "Does the respondent understand this form is for support and professional matching, not emergency assistance or a medical diagnosis?"),
+        ("age_18_or_older", "Is the respondent 18 years of age or older?"),
+        ("preferred_name", "Name the respondent prefers to be called"),
+        ("age_range", "Age range"),
+        ("location_country_city", "Country and town/city where the respondent currently lives"),
+        ("nationality", "Nationality"),
+        ("relationship_status", "Current relationship status"),
+        ("work_situation", "Current work situation"),
+        ("referral_source", "How did they hear about Brave Men Series?"),
+        ("referral_source_detail", "If through a video or post, what was its subject or message?"),
+        ("support_areas", "Which areas would they like help with?"),
+        ("primary_support_area", "Which ONE area needs attention first?"),
+        ("duration_affected", "How long has this been affecting them?"),
+        ("impact_severity", "How strongly is this affecting their daily life today? (1-10)"),
+        ("situation_description", "In their own words, what is happening and what would they like help with?"),
+        ("impact_areas", "What impact is this having?"),
+        ("previous_attempts", "What have they already tried? What helped, even a little?"),
+        ("previous_professional_help", "Have they previously received professional help for this matter?"),
+        ("current_help_additional_support", "If currently receiving help, what additional support are they seeking from Brave Men Series?"),
+        ("relevant_background_info", "Any diagnosed conditions, medications, physical limitations, legal proceedings or other facts a matched professional should know?"),
+        ("desired_outcome_30_90_days", "If this support works well, what would be different in their life in the next 30-90 days?"),
+        ("support_type_preference", "What kind of support do they believe would help most?"),
+        ("readiness_to_act", "How ready are they to take action?"),
+        ("immediate_danger", "Is anyone in immediate physical danger right now?"),
+        ("self_harm_thoughts", "During the past two weeks, have they had thoughts of harming themselves, ending their life or harming another person?"),
+        ("urgent_safety_concern", "Are they currently experiencing abuse, violence, threats, severe withdrawal, a medical emergency or another urgent safety concern?"),
+        ("currently_safe", "Are they in a safe place at this moment?"),
+        ("professional_preference", "Who would they be most comfortable speaking with?"),
+        ("support_format_preference", "Preferred support format"),
+        ("preferred_languages", "Preferred language(s)"),
+        ("availability", "When are they generally available?"),
+        ("contact_timeframe", "How soon would they like to be contacted?"),
+        ("safest_contact_method", "What is the safest way to contact them?"),
+        ("contact_avoid_times", "Are there times or methods to avoid for privacy or safety?"),
+        ("fee_capability", "Which statement best describes their ability to pay for professional support?"),
+        ("cultural_accessibility_notes", "Anything important about culture, faith, disability, accessibility needs or personal preferences that should guide the match?"),
+        ("consent_to_contact", "May an authorised Brave Men Series team member contact them about this request?"),
+        ("consent_to_marketing", "May Brave Men Series send them support information, videos, event updates and resources?"),
+        ("referral_handling_preference", "If a suitable professional is identified, how would they like the referral handled?"),
+        ("consent_share_information", "Consent to share relevant information (only after their approval)"),
+        ("signature_full_name", "Typed name confirming the information is accurate and consent is given"),
+        ("signature_date", "Date"),
+        ("additional_comments", "Is there anything else they would like Brave Men Series to know?"),
+    ]),
+
 }
 
 
@@ -170,6 +223,7 @@ QUESTIONS = {
 CONTACT_FIELD_LABELS = OrderedDict([
     ("full_name", "Name"),
     ("respondent_name", "Name"),
+    ("preferred_name", "Preferred Name"),
     ("position", "Position"),
     ("department", "Department"),
     ("organization", "Organization"),
