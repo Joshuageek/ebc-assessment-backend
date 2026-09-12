@@ -54,6 +54,15 @@ CAMPAIGNS = {
         "sheet": "Brave Men Support Check-In",
         "email": "christian@welcometoebc.com",
         "title": "Brave Men Support Check-In"
+    },
+
+    "agile": {
+        "sheet": "AGILE Project Readiness",
+        "email": [
+            "christian@weareagileconstructions.com",
+            "operations@weareagileconstructions.com"
+        ],
+        "title": "AGILE Project Readiness and Client Alignment Questionnaire"
     }
 
 }
@@ -214,6 +223,101 @@ QUESTIONS = {
         ("signature_date", "Date"),
         ("additional_comments", "Is there anything else they would like Brave Men Series to know?"),
     ]),
+    "agile": OrderedDict([
+        ("client_organization", "Please provide the client or organisation name"),
+        ("contact_person", "Please provide the contact person full name"),
+        ("position", "Kindly state your position or role in the organisation"),
+        ("telephone", "Please provide your telephone number"),
+        ("email", "Please provide your email address"),
+        ("formal_communication_method", "Which method would you prefer us to use for formal project communication?"),
+        ("introduction_source", "How were you introduced to AGILE Constructions?"),
+        ("referrer", "If you were referred, kindly provide the name of the person or organisation that referred you"),
+        ("agile_attractions", "Which aspects of AGILE Constructions attracted your interest?"),
+        ("project_type", "Which type of project would you like us to consider?"),
+        ("project_name", "Please provide the project name, where applicable"),
+        ("project_location", "Please provide the project location"),
+        ("within_kampala", "Please indicate whether the project is located within Kampala"),
+        ("space_size", "If known, kindly indicate the approximate size of the space"),
+        ("space_condition", "Which description best represents the current condition of the space?"),
+        ("project_stage", "Which stage has the project currently reached?"),
+        ("deliverables", "Please briefly describe what you would like AGILE Constructions to deliver"),
+        ("three_outcomes", "Please share the three most important outcomes you expect from the project"),
+        ("space_challenges", "Which challenges would you like the new space to address?"),
+        ("operational_date", "Please indicate when you would like the completed space to become operational"),
+        ("completion_flexibility", "Please let us know whether the requested completion date is flexible"),
+        ("property_relationship", "Which option best describes your relationship to the property?"),
+        ("landlord_approval", "If the property is rented, please indicate the status of the landlord approval for the proposed alterations"),
+        ("approval_responsibility", "Please indicate who will be responsible for landlord approvals statutory permits and building management clearances"),
+        ("site_restrictions", "Kindly outline any restrictions concerning working hours noise access loading parking or use of lifts"),
+        ("uninterrupted_access", "Please indicate whether AGILE will have uninterrupted access to the site during the approved construction programme"),
+        ("decision_role", "Please let us know your role in appointing AGILE Constructions and approving project expenditure"),
+        ("final_authority", "Please identify the person who will have final authority to approve the design BOQ variations and handover"),
+        ("approval_count", "Please indicate how many people will be involved in approving the project"),
+        ("approval_period", "Please indicate your organisation normal approval period"),
+        ("authorised_project_lead", "Please identify the authorised client project lead"),
+        ("budget_status", "Please indicate the current status of the project budget"),
+        ("investment_range", "Which anticipated project investment range best applies?"),
+        ("selection_factors", "Please rank the factors that will matter most when appointing a construction partner"),
+        ("purchasing_approach", "Which statement best represents your purchasing approach?"),
+        ("quality_value_ack", "I understand that AGILE Constructions is a quality and value led company and may not be the lowest-priced provider"),
+        ("site_assessment_fee", "To proceed with a site assessment, please confirm your understanding of the UGX 380,000 professional site-assessment fee"),
+        ("site_fee_credit_ack", "Please confirm your understanding that the site-assessment fee will be credited against the AGILE project invoice if the project proceeds"),
+        ("site_fee_payment_timing", "If the project qualifies, please indicate when you would be ready to pay the site-assessment fee"),
+        ("preferred_site_visits", "Kindly provide three preferred site-visit dates and times"),
+        ("design_fee", "To proceed with design development, please confirm your understanding of the UGX 4,200,000 design and visualisation fee"),
+        ("design_fee_credit_ack", "Please confirm your understanding that this fee will be credited against the invoice if AGILE is appointed to implement the project"),
+        ("design_ip_ack", "Please acknowledge that the design remains the intellectual property of AGILE Constructions"),
+        ("design_use_ack", "We kindly require your confirmation that the design will only be used for the named project and approved location"),
+        ("design_license_ack", "Please acknowledge that appointing another contractor to implement an AGILE design requires a separate design-licensing agreement and fee"),
+        ("design_if_not_appointed", "If AGILE is not appointed to implement the project, please indicate how you intend to use the design"),
+        ("implementation_fee", "To confirm commercial alignment, please acknowledge that AGILE professional and implementation fee is 35% of the approved gross BOQ value"),
+        ("two_edits_ack", "Please confirm your understanding that the standard design allowance includes a maximum of two edit rounds"),
+        ("additional_design_changes_ack", "Please acknowledge that additional design changes may be charged separately"),
+        ("five_reviews_ack", "Please confirm your understanding that the engagement provides for a maximum of five scheduled project-review meetings or site visits after appointment"),
+        ("additional_meetings_ack", "Please acknowledge that additional or unplanned meetings may attract a separate professional fee"),
+        ("programme_fit", "Please indicate whether the proposed programme can accommodate a properly planned 14-working-day active-site implementation period"),
+        ("delay_ack", "Please acknowledge that delays in approvals payments access or client decisions may extend the completion date"),
+        ("phased_implementation", "Please indicate whether you would prefer the project to be implemented in phases"),
+        ("phase_funding", "Please indicate whether your organisation will be able to fund each approved phase before work begins"),
+        ("work_before_funding", "Please let us know whether your organisation requires AGILE to execute any portion of the work before receiving the corresponding funds"),
+        ("financing_fee_ack", "If funding is required, please confirm your understanding that the unfunded work will attract a 15% project-financing fee"),
+        ("payment_approver", "Please identify the person responsible for approving and releasing project payments"),
+        ("formal_change_control_ack", "To maintain clear project records, we kindly require your confirmation that formal written communication will be used for instructions affecting scope design cost materials or timelines"),
+        ("whatsapp_change_ack", "Please acknowledge that WhatsApp instructions will not authorise design changes variations or additional work"),
+        ("change_documentation_ack", "We kindly require all approved changes to be documented and authorised before implementation. Please confirm your acceptance of this process"),
+        ("site_authority_ack", "To maintain clear site authority, we kindly require all project instructions to be communicated through the AGILE project manager or site supervisor"),
+        ("no_direct_technician_instructions_ack", "Please confirm that instructions will not be issued directly to AGILE technicians or subcontractors"),
+        ("technical_adjustment_ack", "Please acknowledge that technical adjustments must be reviewed during a formal site meeting and approved in writing"),
+        ("client_project_lead", "Please identify the person who will serve as the client authorised project lead"),
+        ("site_security", "Please indicate how security will be provided at the site throughout the project"),
+        ("premises_security_ack", "Please acknowledge that the client remains responsible for the general security of the premises"),
+        ("damage_charge_ack", "Please acknowledge that damage caused by client employees visitors or unrelated contractors will be assessed and charged to the client"),
+        ("maintenance_arrangement", "Please indicate whether you would like the one-year maintenance arrangement included in the commercial proposal"),
+        ("maintenance_terms_ack", "Please confirm your understanding that the first six months are complimentary and the additional six months are separately charged"),
+        ("support_needed", "Which statement best represents the professional support you are looking for?"),
+        ("process_willingness", "To proceed, we kindly require your willingness to follow AGILE design approval communication and project-control processes"),
+        ("concerns", "Please share any concerns or questions you would like AGILE to address before the site assessment"),
+        ("additional_information", "Please share any additional information that may help us understand the proposed project"),
+        ("declaration_name", "Please provide your full name"),
+        ("declaration_position", "Please provide your position"),
+        ("electronic_confirmation", "I confirm that entering my name and submitting this form constitutes my acknowledgement of the information provided above"),
+        ("declaration_date", "Please provide the date"),
+        ("declaration_accuracy", "I confirm that the information provided in this form is accurate to the best of my knowledge."),
+        ("declaration_quality", "I understand that AGILE Constructions is a value-led and quality-led company and is not positioned as the cheapest provider."),
+        ("declaration_site_fee", "I understand the UGX 380,000 professional site-assessment fee."),
+        ("declaration_design_fee", "I understand the UGX 4,200,000 design and visualisation fee."),
+        ("declaration_credits", "I understand that the site-assessment and design fees are credited against the project invoice when AGILE receives the implementation assignment."),
+        ("declaration_ip", "I understand AGILE design-ownership and limited-use conditions."),
+        ("declaration_license", "I understand that implementing an AGILE design through another provider requires a separate design-licensing agreement and fee."),
+        ("declaration_implementation_fee", "I understand that AGILE professional and implementation fee is 35% of the approved gross BOQ value."),
+        ("declaration_two_edits", "I understand the limit of two design-edit rounds."),
+        ("declaration_change_control", "I understand the formal communication and change-control requirements."),
+        ("declaration_site_authority", "I understand that project instructions must go through the project manager or site supervisor."),
+        ("declaration_financing", "I understand that unfunded or deferred work attracts a 15% project-financing fee."),
+        ("declaration_programme", "I understand the standard 14-working-day active-site programme and its dependencies."),
+        ("declaration_no_appointment", "I understand that completing this form does not appoint AGILE or authorise work to commence."),
+        ("consent_contact", "I consent to AGILE contacting me regarding this project."),
+    ]),
 
 }
 
@@ -236,6 +340,12 @@ CONTACT_FIELD_LABELS = OrderedDict([
     ("phone", "Phone"),
     ("phone_number", "Phone"),
     ("telephone", "Phone"),
+    ("client_organization", "Organization"),
+    ("contact_person", "Name"),
+    ("project_name", "Project Name"),
+    ("project_location", "Project Location"),
+    ("declaration_name", "Declaration Name"),
+    ("declaration_position", "Declaration Position"),
 ])
 
 
@@ -482,13 +592,18 @@ def submit():
 
         qa_pairs = extract_qa_pairs(campaign, data)
 
-        send_notification_email(
-            recipient=campaign_info["email"],
-            campaign_info=campaign_info,
-            contact=contact,
-            qa_pairs=qa_pairs,
-            data=data
-        )
+        recipients = campaign_info["email"]
+        if isinstance(recipients, str):
+            recipients = [recipients]
+
+        for recipient in recipients:
+            send_notification_email(
+                recipient=recipient,
+                campaign_info=campaign_info,
+                contact=contact,
+                qa_pairs=qa_pairs,
+                data=data
+            )
 
         return (
 
