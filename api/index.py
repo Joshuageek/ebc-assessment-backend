@@ -22,37 +22,55 @@ CAMPAIGNS = {
 
     "recruitment": {
         "sheet": "Recruitment Readiness",
-        "email": "promise.nabaasa@welcometoebc.com",
+        "email": [
+            "promise.nabaasa@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
         "title": "Recruitment Readiness Assessment"
     },
 
     "revenue": {
         "sheet": "Revenue Growth",
-        "email": "makishe@welcometoebc.com",
+        "email": [
+            "makishe@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
         "title": "Revenue Growth Assessment"
     },
 
     "workplace": {
         "sheet": "Workplace Performance",
-        "email": "christian@welcometoebc.com",
+        "email": [
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
         "title": "Workplace Performance Assessment"
     },
 
     "mens": {
         "sheet": "Men's Wellbeing",
-        "email": "johnguest@welcometoebc.com",
+        "email": [
+            "johnguest@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
         "title": "Men's Workplace Wellbeing Assessment"
     },
 
     "executive": {
         "sheet": "Year-End Organizational",
-        "email": "mercy.kemirembe@welcometoebc.com",
+        "email": [
+            "mercy.kemirembe@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
         "title": "Year-End Organizational Assessment"
     },
 
     "brave_men": {
         "sheet": "Brave Men Support Check-In",
-        "email": "christian@welcometoebc.com",
+        "email": [
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
         "title": "Brave Men Support Check-In"
     },
 
@@ -60,9 +78,19 @@ CAMPAIGNS = {
         "sheet": "AGILE Project Readiness",
         "email": [
             "christian@weareagileconstructions.com",
-            "operations@weareagileconstructions.com"
+            "operations@weareagileconstructions.com",
+            "chrislenana@gmail.com"
         ],
         "title": "AGILE Project Readiness and Client Alignment Questionnaire"
+    },
+
+    "christian_lenana": {
+        "sheet": "Christian Lenana Connect",
+        "email": [
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
+        "title": "Connect with Christian Lenana"
     }
 
 }
@@ -317,6 +345,32 @@ QUESTIONS = {
         ("declaration_programme", "I understand the standard 14-working-day active-site programme and its dependencies."),
         ("declaration_no_appointment", "I understand that completing this form does not appoint AGILE or authorise work to commence."),
         ("consent_contact", "I consent to AGILE contacting me regarding this project."),
+    ]),
+
+    "christian_lenana": OrderedDict([
+        ("full_name", "Full name"),
+        ("email", "Email address"),
+        ("phone", "WhatsApp/telephone number"),
+        ("location", "City and country"),
+        ("referral_source", "How did you hear about me?"),
+        ("inquiry_type", "Are you making this inquiry for yourself, a project, or an organisation?"),
+        ("about_description", "Tell us briefly about yourself, the project, or the organisation"),
+        ("service_type", "What are you looking for?"),
+        ("long_term_program", "Which long-term developmental program interests you?"),
+        ("one_day_engagement", "Which one-day engagement do you require?"),
+        ("speaking_engagement_details", "What type of speaking engagement are you planning?"),
+        ("phu_donation", "I/We want to donate"),
+        ("phu_consulting", "I/We need CSR consulting"),
+        ("donation_details", "What would you like to donate and where is it located?"),
+        ("csr_consulting_type", "Is this CSR consulting for you personally, a business/project, or an organisation?"),
+        ("result_challenge", "What result or challenge would you like me to help you address?"),
+        ("participants", "Who will participate or benefit?"),
+        ("delivery_format", "What timing and delivery format do you prefer?"),
+        ("timing_details", "Preferred date/timeframe and location"),
+        ("budget", "Budget range (optional)"),
+        ("decision_timeline", "Decision timeline"),
+        ("supporting_link", "Supporting link or document (optional)"),
+        ("fee_acknowledgement", "Consultation fee acknowledgement"),
     ]),
 
 }
