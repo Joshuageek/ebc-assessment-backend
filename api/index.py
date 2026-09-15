@@ -24,7 +24,8 @@ CAMPAIGNS = {
         "sheet": "Recruitment Readiness",
         "email": [
             "promise.nabaasa@welcometoebc.com",
-            "chrislenana@gmail.com"
+            "chrislenana@gmail.com",
+            "christian@welcometoebc.com"
         ],
         "title": "Recruitment Readiness Assessment"
     },
@@ -33,7 +34,8 @@ CAMPAIGNS = {
         "sheet": "Revenue Growth",
         "email": [
             "makishe@welcometoebc.com",
-            "chrislenana@gmail.com"
+            "chrislenana@gmail.com",
+            "christian@welcometoebc.com"
         ],
         "title": "Revenue Growth Assessment"
     },
@@ -51,7 +53,8 @@ CAMPAIGNS = {
         "sheet": "Men's Wellbeing",
         "email": [
             "johnguest@welcometoebc.com",
-            "chrislenana@gmail.com"
+            "chrislenana@gmail.com",
+            "christian@welcometoebc.com"
         ],
         "title": "Men's Workplace Wellbeing Assessment"
     },
@@ -60,7 +63,8 @@ CAMPAIGNS = {
         "sheet": "Year-End Organizational",
         "email": [
             "mercy.kemirembe@welcometoebc.com",
-            "chrislenana@gmail.com"
+            "chrislenana@gmail.com",
+            "christian@welcometoebc.com"
         ],
         "title": "Year-End Organizational Assessment"
     },
@@ -79,7 +83,8 @@ CAMPAIGNS = {
         "email": [
             "christian@weareagileconstructions.com",
             "operations@weareagileconstructions.com",
-            "chrislenana@gmail.com"
+            "chrislenana@gmail.com",
+            "christian@welcometoebc.com"
         ],
         "title": "AGILE Project Readiness and Client Alignment Questionnaire"
     },
@@ -88,7 +93,8 @@ CAMPAIGNS = {
         "sheet": "Christian Lenana Connect",
         "email": [
             "christian@welcometoebc.com",
-            "chrislenana@gmail.com"
+            "chrislenana@gmail.com",
+            "christian@welcometoebc.com"
         ],
         "title": "Connect with Christian Lenana"
     }
@@ -650,21 +656,34 @@ def submit():
         if isinstance(recipients, str):
             recipients = [recipients]
 
+        email_errors = {}
+
         for recipient in recipients:
-            send_notification_email(
-                recipient=recipient,
-                campaign_info=campaign_info,
-                contact=contact,
-                qa_pairs=qa_pairs,
-                data=data
-            )
+            try:
+                send_notification_email(
+                    recipient=recipient,
+                    campaign_info=campaign_info,
+                    contact=contact,
+                    qa_pairs=qa_pairs,
+                    data=data
+                )
+            except Exception as email_error:
+                # Don't let one bad recipient (bad address, SMTP hiccup,
+                # rate limit, etc.) block the rest of the list from
+                # getting their copy.
+                email_errors[recipient] = str(email_error)
+
+        response_body = {
+            "success": True,
+            "message": "Assessment submitted successfully"
+        }
+
+        if email_errors:
+            response_body["email_errors"] = email_errors
 
         return (
 
-            jsonify({
-                "success": True,
-                "message": "Assessment submitted successfully"
-            }),
+            jsonify(response_body),
 
             200,
 
