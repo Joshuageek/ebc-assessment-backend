@@ -24,8 +24,8 @@ CAMPAIGNS = {
         "sheet": "Recruitment Readiness",
         "email": [
             "promise.nabaasa@welcometoebc.com",
-            "chrislenana@gmail.com",
-            "christian@welcometoebc.com"
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
         ],
         "title": "Recruitment Readiness Assessment"
     },
@@ -34,8 +34,8 @@ CAMPAIGNS = {
         "sheet": "Revenue Growth",
         "email": [
             "makishe@welcometoebc.com",
-            "chrislenana@gmail.com",
-            "christian@welcometoebc.com"
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
         ],
         "title": "Revenue Growth Assessment"
     },
@@ -53,8 +53,8 @@ CAMPAIGNS = {
         "sheet": "Men's Wellbeing",
         "email": [
             "johnguest@welcometoebc.com",
-            "chrislenana@gmail.com",
-            "christian@welcometoebc.com"
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
         ],
         "title": "Men's Workplace Wellbeing Assessment"
     },
@@ -63,8 +63,8 @@ CAMPAIGNS = {
         "sheet": "Year-End Organizational",
         "email": [
             "mercy.kemirembe@welcometoebc.com",
-            "chrislenana@gmail.com",
-            "christian@welcometoebc.com"
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
         ],
         "title": "Year-End Organizational Assessment"
     },
@@ -83,8 +83,8 @@ CAMPAIGNS = {
         "email": [
             "christian@weareagileconstructions.com",
             "operations@weareagileconstructions.com",
-            "chrislenana@gmail.com",
-            "christian@welcometoebc.com"
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
         ],
         "title": "AGILE Project Readiness and Client Alignment Questionnaire"
     },
@@ -93,8 +93,7 @@ CAMPAIGNS = {
         "sheet": "Christian Lenana Connect",
         "email": [
             "christian@welcometoebc.com",
-            "chrislenana@gmail.com",
-            "christian@welcometoebc.com"
+            "chrislenana@gmail.com"
         ],
         "title": "Connect with Christian Lenana"
     }
@@ -448,6 +447,31 @@ def get_sheets_client():
 
 def parse_form_data():
 
+    # Support both classic form submissions (multipart / urlencoded) AND
+    # JSON bodies (request.form is silently EMPTY for a JSON POST, which
+    # was causing every field -- including "campaign" -- to go missing).
+    if request.is_json:
+
+        json_data = request.get_json(silent=True) or {}
+
+        data = {}
+
+        for key, value in json_data.items():
+
+            if isinstance(value, list):
+
+                data[key] = ", ".join(str(v) for v in value)
+
+            elif value is None:
+
+                data[key] = ""
+
+            else:
+
+                data[key] = str(value)
+
+        return data
+
     data = {}
 
     for key in request.form.keys():
@@ -625,11 +649,17 @@ def submit():
 
         data = parse_form_data()
 
-        campaign = data.get("campaign", "general")
+        raw_campaign = data.get("campaign", "")
+
+        campaign = raw_campaign.strip().lower() if raw_campaign else "general"
 
         if campaign not in CAMPAIGNS:
 
-            raise ValueError(f"Invalid campaign: {campaign}")
+            raise ValueError(
+                f"Invalid campaign: received {raw_campaign!r} "
+                f"(normalized to {campaign!r}), expected one of "
+                f"{sorted(CAMPAIGNS.keys())}"
+            )
 
         campaign_info = CAMPAIGNS[campaign]
 
