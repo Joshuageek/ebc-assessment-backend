@@ -96,6 +96,27 @@ CAMPAIGNS = {
             "chrislenana@gmail.com"
         ],
         "title": "Connect with Christian Lenana"
+    },
+
+    "recruitment_lead": {
+        "sheet": "Recruitment Lead Conversion",
+        "email": [
+            "info@welcometoebc.com",
+            "promise.nabaasa@welcometoebc.com",
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
+        "title": "Recruitment Job Order Request"
+    },
+
+    "training_lead": {
+        "sheet": "Training Lead Conversion",
+        "email": [
+            "info@welcometoebc.com",
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
+        "title": "Training Brief Request"
     }
 
 }
@@ -376,6 +397,52 @@ QUESTIONS = {
         ("decision_timeline", "Decision timeline"),
         ("supporting_link", "Supporting link or document (optional)"),
         ("fee_acknowledgement", "Consultation fee acknowledgement"),
+    ]),
+
+    "recruitment_lead": OrderedDict([
+        ("service_model", "Which recruitment approach best describes what they need?"),
+        ("role_or_workforce_description", "Role(s) or workforce category to be filled"),
+        ("vacancy_count", "Number of positions / headcount"),
+        ("reporting_line", "Who the role(s) will report to"),
+        ("job_location", "Location of the role(s)"),
+        ("work_arrangement", "Work arrangement"),
+        ("required_experience_qualifications", "Required experience, qualifications and skills"),
+        ("non_negotiables", "Non-negotiables for this hire"),
+        ("employment_arrangement", "Employment arrangement"),
+        ("confidentiality_level", "Should this search be confidential?"),
+        ("salary_range_or_payroll_budget", "Approved salary range or workforce payroll budget"),
+        ("desired_start_date", "Desired start date"),
+        ("reason_for_recruitment", "What's driving this recruitment need?"),
+        ("job_description_attached", "Do they have a written job description ready?"),
+        ("previous_search_activity", "Previous search activity and challenges"),
+        ("interview_process_decision_maker", "Who's involved in interviews and who decides"),
+        ("workforce_outsourcing_interest", "Interested in manpower or payroll outsourcing?"),
+        ("commercial_response", "Response to EBC's commercial terms for the selected service model"),
+        ("preferred_contact_method", "Preferred contact method"),
+        ("additional_notes", "Additional notes"),
+    ]),
+
+    "training_lead": OrderedDict([
+        ("training_area", "Which training area best fits what they're looking for?"),
+        ("specific_programme_interest", "Specific EBC programme of interest"),
+        ("business_need", "Business need or challenge the training should address"),
+        ("intended_result", "What success should look like after the training"),
+        ("participant_level", "Participant level"),
+        ("participant_count", "Approximate number of participants"),
+        ("country", "Country"),
+        ("city_venue", "City and preferred venue"),
+        ("delivery_mode", "Preferred delivery mode"),
+        ("preferred_dates", "Preferred date(s)"),
+        ("alternative_dates", "Alternative date(s)"),
+        ("format_preference", "Adaptations needed to the standard two-day programme format"),
+        ("client_provided_arrangements", "What the organization will provide"),
+        ("items_ebc_should_quote", "What EBC should include in the quotation"),
+        ("post_training_support", "Wants post-training support or measurement?"),
+        ("standard_investment_ack", "Response to EBC's standard programme investment"),
+        ("approval_authority", "Who approves the training budget"),
+        ("procurement_requirements", "Procurement requirements"),
+        ("preferred_contact_method", "Preferred contact method"),
+        ("additional_notes", "Additional notes"),
     ]),
 
 }
