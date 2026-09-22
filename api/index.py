@@ -102,7 +102,6 @@ CAMPAIGNS = {
         "sheet": "Recruitment Lead Conversion",
         "email": [
             "info@welcometoebc.com",
-            "promise.nabaasa@welcometoebc.com",
             "christian@welcometoebc.com",
             "chrislenana@gmail.com"
         ],
