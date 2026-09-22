@@ -7,12 +7,20 @@ from datetime import datetime, timezone
 from email.mime.text import MIMEText
 
 from flask import Flask, request, jsonify
+from werkzeug.utils import secure_filename
 from google.oauth2.service_account import Credentials
 import gspread
 
 
 app = Flask(__name__)
 
+# File upload configuration
+UPLOAD_FOLDER = '/tmp/uploads'
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'gif'}
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+
+app.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 SPREADSHEET_ID = os.environ.get("SPREADSHEET_ID")
 GOOGLE_CREDENTIALS = os.environ.get("GOOGLE_CREDENTIALS")
@@ -116,6 +124,16 @@ CAMPAIGNS = {
             "chrislenana@gmail.com"
         ],
         "title": "Training Brief Request"
+    },
+
+    "background_checks": {
+        "sheet": "Background Checks Lead",
+        "email": [
+            "info@welcometoebc.com",
+            "christian@welcometoebc.com",
+            "chrislenana@gmail.com"
+        ],
+        "title": "Background Checks Screening Request"
     }
 
 }
@@ -444,6 +462,37 @@ QUESTIONS = {
         ("additional_notes", "Additional notes"),
     ]),
 
+    "background_checks": OrderedDict([
+        ("contact_name", "Contact name"),
+        ("contact_email", "Contact email"),
+        ("contact_phone", "Contact phone"),
+        ("preferred_contact_method", "Preferred contact method"),
+        ("organization", "Organization name"),
+        ("decision_type", "Type of hiring decision"),
+        ("decision_stage", "Stage in the hiring process"),
+        ("role_level", "Role level (entry, mid, senior, executive)"),
+        ("role_titles", "Role titles"),
+        ("candidate_count", "Number of candidates to screen"),
+        ("candidate_countries", "Candidate countries"),
+        ("work_countries", "Countries where work will be performed"),
+        ("desired_decision_date", "Desired decision date"),
+        ("schedule_type", "Batch or ongoing schedule"),
+        ("selected_checks", "Selected background checks"),
+        ("enhanced_review", "Enhanced review requirements"),
+        ("risk_factors", "Risk factors to consider"),
+        ("required_policies", "Required policies"),
+        ("regulator_requirements", "Regulator requirements"),
+        ("consent_status", "Consent status"),
+        ("report_format", "Report format preferences"),
+        ("confidentiality_instructions", "Confidentiality instructions"),
+        ("job_description_file", "Job description file"),
+        ("policy_file", "Policy file"),
+        ("commercial_response", "Commercial response"),
+        ("approving_contact", "Approving contact"),
+        ("privacy_acknowledgement", "Privacy acknowledgement"),
+        ("additional_notes", "Additional notes"),
+    ]),
+
 }
 
 
@@ -472,6 +521,46 @@ CONTACT_FIELD_LABELS = OrderedDict([
     ("declaration_name", "Declaration Name"),
     ("declaration_position", "Declaration Position"),
 ])
+
+
+def allowed_file(filename):
+    """Check if the file has an allowed extension."""
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def handle_file_upload(file_field):
+    """Handle file upload and return file info or None."""
+    if file_field not in request.files:
+        return None
+    
+    file = request.files[file_field]
+    
+    if file.filename == '':
+        return None
+    
+    if file and allowed_file(file.filename):
+        # Create upload directory if it doesn't exist
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        
+        # Secure the filename
+        filename = secure_filename(file.filename)
+        
+        # Add timestamp to avoid conflicts
+        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+        unique_filename = f"{timestamp}_{filename}"
+        
+        filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
+        file.save(filepath)
+        
+        return {
+            'original_filename': file.filename,
+            'saved_filename': unique_filename,
+            'file_size': os.path.getsize(filepath),
+            'content_type': file.content_type
+        }
+    
+    return None
 
 
 def get_cors_headers():
@@ -551,6 +640,14 @@ def parse_form_data():
         else:
 
             data[key] = values[0] if values else ""
+
+    # Handle file uploads - check for common file field names
+    file_fields = ['job_description_file', 'policy_file', 'file', 'document', 'attachment']
+    for file_field in file_fields:
+        file_info = handle_file_upload(file_field)
+        if file_info:
+            data[f"{file_field}_info"] = json.dumps(file_info)
+            data[f"{file_field}_name"] = file_info['original_filename']
 
     return data
 
